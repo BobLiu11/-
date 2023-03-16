@@ -35,7 +35,7 @@ const onSubmit = (form) => {
         message: '登录成功.',
         type: 'success',
       })
-      //router.push({ path: '/layout' })
+      router.push({ path: '/layout' })
     } else if (res.message == '密码错误') {
       ElMessage({
         message: '密码错误,请重新输入.',
@@ -47,7 +47,7 @@ const onSubmit = (form) => {
         type: 'error',
       })
     }
-    router.push({ path: '/layout' })
+    // router.push({ path: '/layout' })
   })
 }
 
