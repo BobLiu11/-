@@ -1,9 +1,9 @@
 <template>
   <div class="card">
     <div class="header">
-      <span>{{ '序号：' }}</span>
+      <span>{{ "序号：" }}</span>
       <el-input class="header_input" v-model="input" placeholder="请输入序号" />
-      <el-button type="primary">查找</el-button>
+      <el-button type="primary" @click="handleFind(input)">查找</el-button>
       <el-button type="success" @click="handAdd('新增')">新增</el-button>
     </div>
     <el-table class="table_style" :data="tableData">
@@ -13,8 +13,20 @@
       <el-table-column prop="publisher" label="出版社" align="center" />
       <el-table-column fixed="right" label="操作" width="100" align="center">
         <template #default="scope">
-          <el-button link type="primary" size="small" @click="handleUpdateEvent(scope.row)">修改</el-button>
-          <el-button link type="primary" @click="handleDeleteEvent(scope.row)" size="small">删除</el-button>
+          <el-button
+            link
+            type="primary"
+            size="small"
+            @click="handleUpdateEvent(scope.row)"
+            >修改</el-button
+          >
+          <el-button
+            link
+            type="primary"
+            @click="handleDeleteEvent(scope.row)"
+            size="small"
+            >删除</el-button
+          >
         </template>
       </el-table-column>
     </el-table>
@@ -43,51 +55,57 @@
   </div>
 </template>
 
-<script setup lang="ts">
-import { onMounted, ref, reactive } from 'vue'
-import router from '../../router';
-import { useStore } from '../../store'
-import { getBookList, deleteBook, updateBook } from '@/api/book'
-const input = ref('')
-const dialogFormVisible = ref(false)
-const tableData: any = ref([])
+<script setup>
+import { onMounted, ref, reactive } from "vue";
+import router from "../../router";
+import { useStore } from "../../store";
+import { getBookList, deleteBook, updateBook, findBookInfo } from "@/api/book";
+const input = ref("");
+const dialogFormVisible = ref(false);
+const tableData = ref([]);
 const form = reactive({
-  name: '',
-  region: '',
-  date1: '',
-  date2: '',
+  name: "",
+  region: "",
+  date1: "",
+  date2: "",
   delivery: false,
   type: [],
-  resource: '',
-  desc: '',
-})
+  resource: "",
+  desc: "",
+});
+const handleFind = (id) => {
+  console.log(id);
+  findBookInfo(id).then((res) => {
+    console.log(res);
+    //tableData.value = res.data;
+  });
+};
 getBookList().then((res) => {
-  tableData.value = res.data
-})
-const handleDeleteEvent: any = (row: any) => {
-  deleteBook(row.id).then(res => {
+  tableData.value = res.data;
+});
+const handleDeleteEvent =(row) => {
+   deleteBook(row.id).then(async (res) => {
     if (+res.code == 200) {
-      getBookList()
+      await getBookList();
     }
-  })
-}
-const handAdd = (type: String) => {
-  if (type == '新增') {
-
+  });
+};
+const handAdd = (type) => {
+  if (type == "新增") {
   }
-  dialogFormVisible.value = true
-}
-const handleUpdateEvent = (row: any) => {
+  dialogFormVisible.value = true;
+};
+const handleUpdateEvent = (row) => {
   // updateBook(row.id).then(res => {
   //   // if (+res.code == 200) {
   //   //   getBookList()
   //   // }
   // })
-  console.log(row)
-}
+  console.log(row);
+};
 const gotoDag = function () {
-  router.push({ path: '/test' })
-}
+  router.push({ path: "/test" });
+};
 </script>
 
 <style scoped lang="less">
@@ -108,7 +126,7 @@ const gotoDag = function () {
 
 .table_style {
   margin: 1rem;
-  width: 98%
+  width: 98%;
 }
 </style>
   

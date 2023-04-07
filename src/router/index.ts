@@ -21,7 +21,6 @@ const router = createRouter({
     {
       path: "/",
       component: () => import("../views/Home.vue"),
-      //hidden: true,
       meta: {
         auth: [],
         title: "首页",
@@ -49,16 +48,7 @@ const router = createRouter({
             icon: "el-icon-menu",
           },
         },
-        {
-          path: "/setting",
-          component: () => import("../views/setting/Index.vue"),
-          //hidden: true,
-          meta: {
-            auth: [],
-            title: "setting",
-            icon: "el-icon-menu",
-          },
-        },
+        
         {
           path: "/common",
           component: () => import("../views/common/Index.vue"),
@@ -121,10 +111,39 @@ const router = createRouter({
               meta: {
                 auth: [],
                 title: "svg",
-                icon: "el-icon-menu",
+                icon: "el-icon-message",
+              },
+            },
+            {
+              path: "/music",
+              component: () => import("../views/common/Music.vue"),
+              meta: {
+                auth: [],
+                title: "svg",
+                icon: "el-icon-music",
               },
             },
           ],
+        },
+        {
+          path: "/socket",
+          component: () => import("../views/socket/Index.vue"),
+          //hidden: true,
+          meta: {
+            auth: [],
+            title: "socket",
+            // icon: "el-icon-menu",
+          },
+        },
+        {
+          path: "/setting",
+          component: () => import("../views/setting/Index.vue"),
+          //hidden: true,
+          meta: {
+            auth: [],
+            title: "setting",
+            // icon: "el-icon-menu",
+          },
         },
       ],
     },
@@ -138,16 +157,16 @@ const router = createRouter({
         icon: "el-icon-menu",
       },
     },
-    // {
-    //   path: "/test",
-    //   component: ()=> import("../views/Test.vue"),
-    //   //hidden: true,
-    //   meta: {
-    //     auth: [],
-    //     title: "test",
-    //     icon: "el-icon-menu",
-    //   },
-    // },
+    {
+      path: "/*",
+      component: ()=> import("../views/404.vue"),
+      //hidden: true,
+      meta: {
+        auth: [],
+        title: "test",
+        icon: "el-icon-menu",
+      },
+    },
   ] as MyRouteRecordRaw[],
 });
 

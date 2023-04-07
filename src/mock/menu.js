@@ -69,11 +69,25 @@ export const menu = [
       {
         index: "2-8",
         title: "svg组件",
-        icon: "Handbag",
+        icon: "Message",
         children: [],
         path: "/svg",
       },
+      {
+        index: "2-9",
+        title: "Music组件",
+        icon: "Music",
+        children: [],
+        path: "/music",
+      },
     ],
+  },
+  {
+    index: "3",
+    title: "socket",
+    icon: "Switch",
+    children: [],
+    path: "/socket",
   },
   {
     index: "4",
