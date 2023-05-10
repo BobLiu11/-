@@ -1,9 +1,10 @@
 import http from "../axios/index";
 
-export function getBookList() {
+export function getBookList(value) {
   return http({
     url: "api/book",
     method: "get",
+    params: { value },
   });
 }
 
@@ -19,7 +20,7 @@ export function addBook(book) {
   return http({
     url: "api/addBook",
     method: "post",
-    params: { book },
+    data: { book },
   });
 }
 

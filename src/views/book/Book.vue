@@ -1,13 +1,17 @@
 <template>
   <div class="card">
     <div class="header">
-      <span>{{ "序号：" }}</span>
-      <el-input class="header_input" v-model="input" placeholder="请输入序号" />
+      <span>{{ "条件：" }}</span>
+      <el-input
+        class="header_input"
+        v-model="input"
+        placeholder="请输入书名、作者或出版社"
+      />
       <el-button type="primary" @click="handleFind(input)">查找</el-button>
-      <el-button type="success" @click="handAdd('新增')">新增</el-button>
+      <el-button type="success" @click="handleAdd('新增')">新增</el-button>
     </div>
     <el-table class="table_style" :data="tableData">
-      <el-table-column prop="id" label="序号" width="60" align="center" />
+      <el-table-column type="index" width="150" label="序号" />
       <el-table-column prop="bookname" label="书名" align="center" />
       <el-table-column prop="author" label="作者" align="center" />
       <el-table-column prop="publisher" label="出版社" align="center" />
@@ -31,23 +35,23 @@
       </el-table-column>
     </el-table>
 
-    <el-dialog v-model="dialogFormVisible" title="Shipping address">
+    <el-dialog v-model="dialogFormVisible" title="新增书籍">
       <el-form :model="form">
-        <el-form-item label="Promotion name">
-          <el-input v-model="form.name" autocomplete="off" />
+        <el-form-item label="书名">
+          <el-input v-model="form.bookname" autocomplete="off" />
         </el-form-item>
-        <el-form-item label="Zones">
-          <el-select v-model="form.region" placeholder="Please select a zone">
-            <el-option label="Zone No.1" value="shanghai" />
-            <el-option label="Zone No.2" value="beijing" />
-          </el-select>
+        <el-form-item label="作者">
+          <el-input v-model="form.author" autocomplete="off" />
+        </el-form-item>
+        <el-form-item label="出版社">
+          <el-input v-model="form.publisher" autocomplete="off" />
         </el-form-item>
       </el-form>
       <template #footer>
         <span class="dialog-footer">
-          <el-button @click="dialogFormVisible = false">Cancel</el-button>
-          <el-button type="primary" @click="dialogFormVisible = false">
-            Confirm
+          <el-button @click="dialogFormVisible = false">取消</el-button>
+          <el-button type="primary" @click="handleSubmit(form)">
+            提交
           </el-button>
         </span>
       </template>
@@ -59,41 +63,60 @@
 import { onMounted, ref, reactive } from "vue";
 import router from "../../router";
 import { useStore } from "../../store";
-import { getBookList, deleteBook, updateBook, findBookInfo } from "@/api/book";
+import { ElMessage } from "element-plus";
+import {
+  getBookList,
+  deleteBook,
+  updateBook,
+  findBookInfo,
+  addBook,
+} from "@/api/book";
 const input = ref("");
 const dialogFormVisible = ref(false);
 const tableData = ref([]);
 const form = reactive({
-  name: "",
-  region: "",
-  date1: "",
-  date2: "",
-  delivery: false,
-  type: [],
-  resource: "",
-  desc: "",
+  bookname: "",
+  author: "",
+  publisher: [],
 });
-const handleFind = (id) => {
-  console.log(id);
-  findBookInfo(id).then((res) => {
+onMounted(() => {
+  handleGetBookList();
+});
+const handleFind = (value) => {
+  handleGetBookList(value);
+};
+const handleGetBookList = () => {
+  getBookList().then((res) => {
     console.log(res);
-    //tableData.value = res.data;
+    if (res.code === 200) {
+      tableData.value = res.data;
+    }
   });
 };
-getBookList().then((res) => {
-  tableData.value = res.data;
-});
-const handleDeleteEvent =(row) => {
-   deleteBook(row.id).then(async (res) => {
+
+const handleDeleteEvent = (row) => {
+  deleteBook(row.id).then(async (res) => {
     if (+res.code == 200) {
       await getBookList();
     }
   });
 };
-const handAdd = (type) => {
+const handleAdd = (type) => {
   if (type == "新增") {
   }
   dialogFormVisible.value = true;
+};
+const handleSubmit = (form) => {
+  addBook(form).then(async (res) => {
+    if (res.code === 200) {
+      ElMessage({
+        message: res.message,
+        type: "success",
+      });
+      await handleGetBookList();
+      dialogFormVisible.value = false;
+    }
+  });
 };
 const handleUpdateEvent = (row) => {
   // updateBook(row.id).then(res => {
