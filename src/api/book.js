@@ -8,14 +8,6 @@ export function getBookList(value) {
   });
 }
 
-export function findBookInfo(id) {
-  return http({
-    url: "api/findBook",
-    method: "get",
-    params: { id },
-  });
-}
-
 export function addBook(book) {
   return http({
     url: "api/addBook",

@@ -8,7 +8,7 @@
         placeholder="请输入书名、作者或出版社"
       />
       <el-button type="primary" @click="handleFind(input)">查找</el-button>
-      <el-button type="success" @click="handleAdd('新增')">新增</el-button>
+      <el-button type="success" @click="handleDialog('新增')">新增</el-button>
     </div>
     <el-table class="table_style" :data="tableData">
       <el-table-column type="index" width="150" label="序号" />
@@ -21,7 +21,7 @@
             link
             type="primary"
             size="small"
-            @click="handleUpdateEvent(scope.row)"
+            @click="handleDialog('修改', scope.row)"
             >修改</el-button
           >
           <el-button
@@ -35,7 +35,7 @@
       </el-table-column>
     </el-table>
 
-    <el-dialog v-model="dialogFormVisible" title="新增书籍">
+    <el-dialog v-model="dialogFormVisible" :title="title">
       <el-form :model="form">
         <el-form-item label="书名">
           <el-input v-model="form.bookname" autocomplete="off" />
@@ -61,14 +61,11 @@
 
 <script setup>
 import { onMounted, ref, reactive } from "vue";
-import router from "../../router";
-import { useStore } from "../../store";
 import { ElMessage } from "element-plus";
 import {
   getBookList,
   deleteBook,
   updateBook,
-  findBookInfo,
   addBook,
 } from "@/api/book";
 const input = ref("");
@@ -77,8 +74,9 @@ const tableData = ref([]);
 const form = reactive({
   bookname: "",
   author: "",
-  publisher: [],
+  publisher: "",
 });
+const title = ref("");
 onMounted(() => {
   handleGetBookList();
 });
@@ -87,47 +85,64 @@ const handleFind = (value) => {
 };
 const handleGetBookList = () => {
   getBookList().then((res) => {
-    console.log(res);
     if (res.code === 200) {
       tableData.value = res.data;
     }
   });
 };
-
 const handleDeleteEvent = (row) => {
-  deleteBook(row.id).then(async (res) => {
-    if (+res.code == 200) {
-      await getBookList();
+  deleteBook(row._id).then(async (res) => {
+    if (+res.code === 200) {
+      ElMessage({
+        message: res.message,
+        type: "success",
+      });
+      await handleGetBookList();
     }
   });
 };
-const handleAdd = (type) => {
+const handleDialog = (type, row) => {
   if (type == "新增") {
+    title.value = "新增图书";
+    form.bookname = "";
+    form.author = "";
+    form.publisher = "";
+  } else {
+    title.value = "修改图书";
+    Object.assign(form, row);
   }
   dialogFormVisible.value = true;
 };
 const handleSubmit = (form) => {
+  if (title.value === "新增图书") {
+    handleAddBook(form);
+  } else {
+    handleUpdateEvent(form);
+  }
+};
+const handleAddBook = (form) => {
   addBook(form).then(async (res) => {
     if (res.code === 200) {
       ElMessage({
         message: res.message,
         type: "success",
       });
-      await handleGetBookList();
       dialogFormVisible.value = false;
+      await handleGetBookList();
     }
   });
 };
-const handleUpdateEvent = (row) => {
-  // updateBook(row.id).then(res => {
-  //   // if (+res.code == 200) {
-  //   //   getBookList()
-  //   // }
-  // })
-  console.log(row);
-};
-const gotoDag = function () {
-  router.push({ path: "/test" });
+const handleUpdateEvent = (form) => {
+  updateBook(form).then(async (res) => {
+    if (+res.code === 200) {
+      ElMessage({
+        message: res.message,
+        type: "success",
+      });
+      dialogFormVisible.value = false;
+      await handleGetBookList();
+    }
+  });
 };
 </script>
 
