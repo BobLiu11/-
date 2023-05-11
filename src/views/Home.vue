@@ -1,25 +1,27 @@
 <template>
   <div class="home_style">
-    <el-form
-      ref="ruleFormRef"
-      :model="form"
-      label-width="100px"
-      :rules="rules"
-      center
-    >
-      <el-form-item label="用户名：" prop="name">
-        <el-input v-model="form.name" />
-      </el-form-item>
-      <el-form-item label="密码：" prop="password">
-        <el-input v-model="form.password" />
-      </el-form-item>
-      <el-form-item>
+    <div>
+      <el-form
+        ref="ruleFormRef"
+        :model="form"
+        label-width="100px"
+        :rules="rules"
+        center
+      >
+        <el-form-item label="用户名：" prop="name">
+          <el-input v-model="form.name" />
+        </el-form-item>
+        <el-form-item label="密码：" prop="password">
+          <el-input v-model="form.password" />
+        </el-form-item>
+      </el-form>
+      <div>
         <el-button type="primary" @click="onSubmit(ruleFormRef, form)"
           >登录</el-button
         >
-        <el-button type="primary" @click="onLogin">注册</el-button>
-      </el-form-item>
-    </el-form>
+        <!-- <el-button type="primary" @click="onLogin">注册</el-button> -->
+      </div>
+    </div>
   </div>
 </template>
 
