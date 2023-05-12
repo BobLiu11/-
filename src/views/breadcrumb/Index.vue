@@ -19,7 +19,7 @@
       />
       <el-dropdown>
         <span class="el-dropdown-link">
-          姓名
+          {{ users_store.getName }}
           <el-icon class="el-icon--right">
             <arrow-down />
           </el-icon>
@@ -37,8 +37,10 @@
   
 <script setup>
 import { ref } from "vue";
+import { storeToRefs } from "pinia";
+import { usersStore } from "../../store/user";
 import { useRouter, useRoute } from "vue-router";
-import { ArrowRight, Bell, ArrowDown } from "@element-plus/icons-vue";
+const users_store = usersStore();
 const url = ref(
   "https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg"
 );

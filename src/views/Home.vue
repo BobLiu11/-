@@ -29,11 +29,13 @@
 import { getLogin } from "../api/user";
 import { ref, reactive } from "vue";
 import router from "../router";
-import { useStore } from "../store";
+import { storeToRefs } from "pinia";
+import { usersStore } from "../store/user";
 import { ElMessage } from "element-plus";
+const store = usersStore();
+const { name } = storeToRefs(store);
 const tableData = ref([]);
 const count = ref(0);
-const store = useStore();
 const ruleFormRef = ref();
 const form = reactive({
   name: "",
@@ -61,6 +63,7 @@ const handleLogin = async () => {
         message: "登录成功.",
         type: "success",
       });
+      await store.setName(res.result.user_name);
     } else if (res.message == "密码错误") {
       ElMessage({
         message: "密码错误,请重新输入.",
