@@ -25,7 +25,7 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { getLogin } from "../api/user";
 import { ref, reactive } from "vue";
 import router from "../router";
@@ -45,8 +45,11 @@ const rules = reactive({
   name: [{ required: true, message: "请输入用户名", trigger: "blur" }],
   password: [{ required: true, message: "请输入密码", trigger: "blur" }],
 });
-const onSubmit = (ruleFormRef, form) => {
-  ruleFormRef.validate(async (valid, fields) => {
+const onSubmit: (ruleFormRef: any, from: any) => void = (
+  ruleFormRef: any,
+  form: any
+): void => {
+  ruleFormRef.validate(async (valid: any, fields: any) => {
     if (valid) {
       await handleLogin();
     } else {

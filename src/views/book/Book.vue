@@ -59,15 +59,10 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { onMounted, ref, reactive } from "vue";
 import { ElMessage } from "element-plus";
-import {
-  getBookList,
-  deleteBook,
-  updateBook,
-  addBook,
-} from "@/api/book";
+import { getBookList, deleteBook, updateBook, addBook } from "@/api/book";
 const input = ref("");
 const dialogFormVisible = ref(false);
 const tableData = ref([]);
@@ -80,17 +75,17 @@ const title = ref("");
 onMounted(() => {
   handleGetBookList();
 });
-const handleFind = (value) => {
+const handleFind = (value: any) => {
   handleGetBookList(value);
 };
-const handleGetBookList = () => {
-  getBookList().then((res) => {
+const handleGetBookList = (value?: any) => {
+  getBookList(value).then((res) => {
     if (res.code === 200) {
       tableData.value = res.data;
     }
   });
 };
-const handleDeleteEvent = (row) => {
+const handleDeleteEvent = (row: any) => {
   deleteBook(row._id).then(async (res) => {
     if (+res.code === 200) {
       ElMessage({
@@ -101,7 +96,7 @@ const handleDeleteEvent = (row) => {
     }
   });
 };
-const handleDialog = (type, row) => {
+const handleDialog = (type: any, row?: any) => {
   if (type == "新增") {
     title.value = "新增图书";
     form.bookname = "";
@@ -113,14 +108,14 @@ const handleDialog = (type, row) => {
   }
   dialogFormVisible.value = true;
 };
-const handleSubmit = (form) => {
+const handleSubmit = (form: any) => {
   if (title.value === "新增图书") {
     handleAddBook(form);
   } else {
     handleUpdateEvent(form);
   }
 };
-const handleAddBook = (form) => {
+const handleAddBook = (form: any) => {
   addBook(form).then(async (res) => {
     if (res.code === 200) {
       ElMessage({
@@ -132,7 +127,7 @@ const handleAddBook = (form) => {
     }
   });
 };
-const handleUpdateEvent = (form) => {
+const handleUpdateEvent = (form: any) => {
   updateBook(form).then(async (res) => {
     if (+res.code === 200) {
       ElMessage({
