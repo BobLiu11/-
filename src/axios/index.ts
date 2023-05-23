@@ -12,7 +12,7 @@ const http = axios.create({
 http.interceptors.request.use(
   (config) => {
     // 在发送请求之前做些什么
-    const headers = config.headers;
+    const headers: any = config.headers;
     if (!headers["Content-Type"]) {
       headers["Content-Type"] = "application/json;charset=UTF-8";
     }

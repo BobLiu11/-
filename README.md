@@ -1,3 +1,5 @@
+## 使用的技术
+1、vue3 + Typescript + vite + pinia  
 ## 已经完成的部分
 1、登录  
 2、书籍管理部分  

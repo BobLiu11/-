@@ -1,6 +1,6 @@
 import http from "../axios/index";
 
-export function getBookList(value) {
+export function getBookList(value: any) {
   return http({
     url: "api/book",
     method: "get",
@@ -8,7 +8,7 @@ export function getBookList(value) {
   });
 }
 
-export function addBook(book) {
+export function addBook(book: any) {
   return http({
     url: "api/addBook",
     method: "post",
@@ -16,7 +16,7 @@ export function addBook(book) {
   });
 }
 
-export function updateBook(book) {
+export function updateBook(book: any) {
   return http({
     url: "api/updateBook",
     method: "put",
@@ -24,7 +24,7 @@ export function updateBook(book) {
   });
 }
 
-export function deleteBook(id) {
+export function deleteBook(id: any) {
   return http({
     url: "api/deleteBook",
     method: "delete",
