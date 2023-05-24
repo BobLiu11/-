@@ -29,7 +29,7 @@
 import { getLogin } from "@/api/user";
 import { ref, reactive } from "vue";
 import router from "../router";
-import { useStore } from "../store";
+//import { userStore } from "@/store/index";
 import { ElMessage } from "element-plus";
 const form = reactive({
   name: "",

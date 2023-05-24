@@ -43,7 +43,7 @@
 <script setup>
 import { ref } from 'vue'
 import { useRoute, useRouter } from "vue-router";
-import { menu } from "../../mock/menu.js";
+import { menu } from "@/mock/menu.ts";
 const router = useRouter();
 const isCollapse = ref(false)
 const handleOpen = (key, keyPath) => {

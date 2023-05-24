@@ -4,5 +4,5 @@ import { usersStore } from "./user";
 export default function useStore() {
   return {
     usersStore: usersStore(),
-  }
+  };
 }
