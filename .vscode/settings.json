@@ -1,3 +1,5 @@
 {
-    "editor.indentSize": "tabSize"
+    "editor.indentSize": "tabSize",
+    "vue.codeLens.enabled": false,
+    "editor.codeLens": false
 }

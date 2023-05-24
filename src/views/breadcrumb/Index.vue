@@ -1,6 +1,6 @@
 <template>
   <div class="breadcrumb">
-    <el-breadcrumb separator="/">
+    <el-breadcrumb :separator-icon="ArrowRight" separator="/">
       <el-breadcrumb-item :to="{ path: '/' }">homepage</el-breadcrumb-item>
       <el-breadcrumb-item>promotion management</el-breadcrumb-item>
       <el-breadcrumb-item>promotion list</el-breadcrumb-item>
@@ -35,7 +35,8 @@
   </div>
 </template>
   
-<script setup>
+<script lang="ts" setup>
+import { ArrowRight } from "@element-plus/icons-vue";
 import { ref } from "vue";
 import { storeToRefs } from "pinia";
 import { usersStore } from "../../store/user";
