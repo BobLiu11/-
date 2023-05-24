@@ -1,9 +1,14 @@
 {
   "compilerOptions": {
-    "baseUrl": ".",
+    "baseUrl": ".", //  "./"
     "paths": {
-      "@/*":["src/*"]
+      "@/*": [
+        "src/*"
+      ] //  "*":["types/*"]
     },
+    "outDir": "lib", //将 ts 文件的编译结果输出到 lib 目录下
+    "declaration": true, //设置为 true，表示将会由 ts 文件自动生成 .d.ts 声明文件，也会输出到 lib 目录下。
+    //使用 tsc 自动生成声明文件时，每个 ts 文件都会对应一个 .d.ts 声明文件。这样的好处是，使用方不仅可以在使用 import foo from 'foo' 导入默认的模块时获得类型提示，还可以在使用 import bar from 'foo/lib/bar' 导入一个子模块时，也获得对应的类型提示。
     "target": "ESNext",
     "useDefineForClassFields": true,
     "module": "ESNext",
@@ -12,16 +17,31 @@
     "jsx": "preserve",
     "sourceMap": true,
     "resolveJsonModule": true,
-    "isolatedModules": true,//这是因为 esbuild 只执行没有类型信息的转译，它并不支持某些特性，如 const enum 和隐式类型导入
+    "isolatedModules": true, //这是因为 esbuild 只执行没有类型信息的转译，它并不支持某些特性，如 const enum 和隐式类型导入
     "esModuleInterop": true,
-    "lib": ["ESNext", "DOM"],
-    "skipLibCheck": true,//vue不能很好地与 "isolatedModules":true共同工作。使用 "skipLibCheck": true 来缓解这个错误
+    "lib": [
+      "ESNext",
+      "DOM"
+    ],
+    "skipLibCheck": true, //vue不能很好地与 "isolatedModules":true共同工作。使用 "skipLibCheck": true 来缓解这个错误
     "typeRoots": [
       "./src/types/**/*",
     ],
-    "types": ["lodash"],
+    "types": [
+      "lodash"
+    ],
   },
-  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue", "src/**/*.js", ],
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.d.ts",
+    "src/**/*.tsx",
+    "src/**/*.vue",
+    "src/**/*.js",
+  ],
   "exclude": [],
-  "references": [{ "path": "./tsconfig.node.json" }],
+  "references": [
+    {
+      "path": "./tsconfig.node.json"
+    }
+  ],
 }
