@@ -2,7 +2,7 @@
 1、vue3 + Typescript + vite + pinia  
 ## 已经完成的部分
 1、登录  
-2、书籍管理部分  
+2、书籍管理部分
 ## TODO
 1、面包屑  
 2、token  

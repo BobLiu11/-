@@ -6,6 +6,7 @@
         class="header_input"
         v-model="input"
         placeholder="请输入书名、作者或出版社"
+        clearable
       />
       <el-button type="primary" @click="handleFind(input)">查找</el-button>
       <el-button type="success" @click="handleDialog('新增')">新增</el-button>
@@ -35,8 +36,8 @@
       </el-table-column>
     </el-table>
 
-    <el-dialog v-model="dialogFormVisible" :title="title">
-      <el-form :model="form">
+    <el-dialog v-model="dialogFormVisible" :title="title" >
+      <el-form :model="form" label-width="5rem">
         <el-form-item label="书名">
           <el-input v-model="form.bookname" autocomplete="off" />
         </el-form-item>

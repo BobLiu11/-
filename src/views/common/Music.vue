@@ -28,7 +28,8 @@ import Player from "xgplayer";
 //   });
 // });
 </script>
-  <style scoped lang="scss">
+
+<style scoped lang="scss">
 .header {
   display: flex;
   align-items: center;

@@ -1,72 +1,101 @@
 <template>
-  <el-form :model="form" label-width="120px" center>
-    <el-form-item label="用户名：">
-      <el-input v-model="form.name" />
-    </el-form-item>
-    <el-form-item label="密码：">
-      <el-input v-model="form.password" />
-    </el-form-item>
-    <el-form-item label="性别：">
-      <el-select v-model="form.gender" placeholder="选择性别">
-        <el-option label="男" value="男" />
-        <el-option label="女" value="女" />
-      </el-select>
-    </el-form-item>
-    <el-form-item label="年龄：">
-      <el-input v-model="form.age" />
-    </el-form-item>
-    <el-form-item label="住址：">
-      <el-input v-model="form.address" />
-    </el-form-item>
-    <el-form-item>
-      <el-button type="primary" @click="onSubmit(form)">提交</el-button>
-      <el-button type="primary" @click="handleCancle">取消</el-button>
-    </el-form-item>
-  </el-form>
-</template>
+    <div class="home_style">
+      <div>
+        <el-form
+          ref="ruleFormRef"
+          :model="form"
+          label-width="100px"
+          :rules="rules"
+          center
+        >
+          <el-form-item label="用户名：" prop="name">
+            <el-input v-model="form.name" />
+          </el-form-item>
+          <el-form-item label="密码：" prop="password">
+            <el-input v-model="form.password" />
+          </el-form-item>
+        </el-form>
+        <div>
+          <el-button type="primary" @click="onSubmit(ruleFormRef, form)"
+            >登录</el-button
+          >
+          <!-- <el-button type="primary" @click="onLogin">注册</el-button> -->
+        </div>
+      </div>
+    </div>
+  </template>
   
-<script setup>
-import { getLogin } from "@/api/user";
-import { ref, reactive } from "vue";
-import router from "../router";
-//import { userStore } from "@/store/index";
-import { ElMessage } from "element-plus";
-const form = reactive({
-  name: "",
-  password: "",
-  gender: "",
-  age: "",
-  address: "",
-});
-const onSubmit = (form) => {
-  getLogin(form).then(async (res) => {
-    if (res.message == "登录成功") {
-      ElMessage({
-        message: "登录成功.",
-        type: "success",
-      });
-      await router.push({ path: "/book" });
-    } else if (res.message == "密码错误") {
-      ElMessage({
-        message: "密码错误,请重新输入.",
-        type: "warning",
-      });
-      return;
-    } else {
-      ElMessage({
-        message: "用户不存在.",
-        type: "error",
-      });
-      return;
-    }
+  <script setup lang="ts">
+  import { getLogin } from "../api/user";
+  import { ref, reactive } from "vue";
+  import router from "../router";
+  import { storeToRefs } from "pinia";
+  import { usersStore } from "../store/user";
+  import { ElMessage } from "element-plus";
+  const store = usersStore();
+  const { name } = storeToRefs(store);
+  const tableData = ref([]);
+  const count = ref(0);
+  const ruleFormRef = ref();
+  const form = reactive({
+    name: "",
+    password: "",
   });
-};
-
-const handleCancle = () => {
-  router.push({ path: "/" });
-};
-</script>
+  const rules = reactive({
+    name: [{ required: true, message: "请输入用户名", trigger: "blur" }],
+    password: [{ required: true, message: "请输入密码", trigger: "blur" }],
+  });
+  const onSubmit: (ruleFormRef: any, from: any) => void = (
+    ruleFormRef: any,
+    form: any
+  ): void => {
+    ruleFormRef.validate(async (valid: any, fields: any) => {
+      if (valid) {
+        await handleLogin();
+      } else {
+        console.log("error submit!", fields);
+      }
+    });
+  };
   
-<style scoped lang="less">
-</style>
+  const handleLogin = async () => {
+    await getLogin(form).then(async (res) => {
+      if (res.message == "登录成功") {
+        await router.push({ path: "/layout" });
+        ElMessage({
+          message: "登录成功.",
+          type: "success",
+        });
+        await store.setName(res.result.user_name);
+      } else if (res.message == "密码错误") {
+        ElMessage({
+          message: "密码错误,请重新输入.",
+          type: "warning",
+        });
+      } else {
+        ElMessage({
+          message: "用户不存在.",
+          type: "error",
+        });
+      }
+    });
+  };
+  
+  const onLogin = () => {
+    router.push({ path: "/login" });
+  };
+  </script>
+  
+  <style scoped lang="less">
+  .home_style {
+    width: 100vw;
+    height: 100vh;
+    background-image: url("../../src/assets/bg.jpg");
+    background-repeat: no-repeat, no-repeat;
+    background-size: 100% 120%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  </style>
       

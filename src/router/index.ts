@@ -20,10 +20,10 @@ const router = createRouter({
   routes: [
     {
       path: "/",
-      component: () => import("../views/Home.vue"),
+      component: () => import("../views/Login.vue"),
       meta: {
         auth: [],
-        title: "首页",
+        title: "",
         icon: "el-icon-menu",
       },
     },
@@ -39,6 +39,15 @@ const router = createRouter({
       },
       children: [
         {
+          path: "/home",
+          component: () => import("../views/Home.vue"),
+          meta: {
+            auth: [],
+            title: "首页",
+            icon: "el-icon-menu",
+          },
+        },
+        {
           path: "/book",
           component: () => import("../views/book/Book.vue"),
           //hidden: true,
@@ -48,7 +57,7 @@ const router = createRouter({
             icon: "el-icon-menu",
           },
         },
-        
+
         {
           path: "/common",
           component: () => import("../views/common/Index.vue"),
@@ -148,8 +157,8 @@ const router = createRouter({
       ],
     },
     {
-      path: "/login",
-      component: () => import("../views/Login.vue"),
+      path: "/register",
+      component: () => import("../views/Register.vue"),
       //hidden: true,
       meta: {
         auth: [],
@@ -159,7 +168,7 @@ const router = createRouter({
     },
     {
       path: "/*",
-      component: ()=> import("../views/404.vue"),
+      component: () => import("../views/404.vue"),
       //hidden: true,
       meta: {
         auth: [],
