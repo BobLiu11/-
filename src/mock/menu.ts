@@ -76,7 +76,7 @@ export const menu = [
       {
         index: "2-9",
         title: "Music组件",
-        icon: "Music",
+        icon: "Headset",
         children: [],
         path: "/music",
       },

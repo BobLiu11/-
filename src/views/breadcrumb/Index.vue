@@ -1,41 +1,6 @@
 <template>
   <div class="breadcrumb">
-    <el-breadcrumb :separator-icon="ArrowRight" separator="/">
-      <!-- <div v-for="(item, index) in menu" :key="index">
-        <el-breadcrumb-item
-          v-if="item.children && item.children.length"
-          :index="item.index"
-        >
-          <template #title>
-            <el-icon :size="20">
-              <component :is="item.icon" />
-            </el-icon>
-            <span>{{ item.title }}</span>
-          </template>
-          <el-breadcrumb-item
-            v-for="(subItem, index) in item.children"
-            :key="index"
-            :index="subItem.index"
-          >
-            <el-icon :size="20">
-              <component :is="subItem.icon" />
-            </el-icon>
-            <span>{{ subItem.title }}</span>
-          </el-breadcrumb-item>
-        </el-breadcrumb-item>
-        <el-breadcrumb-item v-else :index="item.index">
-          <el-icon :size="20">
-            <component :is="item.icon" />
-          </el-icon>
-          <span>{{ item.title }}</span>
-        </el-breadcrumb-item>
-      </div> -->
-
-      <el-breadcrumb-item :to="{ path: '/home' }">首页</el-breadcrumb-item>
-      <el-breadcrumb-item>promotion management</el-breadcrumb-item>
-      <el-breadcrumb-item>promotion list</el-breadcrumb-item>
-      <el-breadcrumb-item>promotion detail</el-breadcrumb-item>
-    </el-breadcrumb>
+    <BreadcrumbItem :breadcrumbItems="menu" />
     <div class="right_container">
       <el-badge class="item" :value="3">
         <el-button :icon="Bell" />
@@ -72,6 +37,8 @@ import { useUsersStore } from "../../store/user";
 import { useRouter, useRoute } from "vue-router";
 import { Bell } from "@element-plus/icons-vue";
 import { menu } from "@/mock/menu";
+import  BreadcrumbItem  from "./BreadcrumbItem.vue";
+
 const users_store = useUsersStore();
 const url = ref(
   "https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg"

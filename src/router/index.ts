@@ -31,7 +31,7 @@ const router = createRouter({
       path: "/layout",
       component: () => import("../views/Layout.vue"),
       //hidden: true,
-      redirect: "/book",
+      redirect: "/home",
       meta: {
         auth: [],
         title: "layout",
@@ -45,6 +45,7 @@ const router = createRouter({
             auth: [],
             title: "首页",
             icon: "el-icon-menu",
+            breadcrumb: [{ name: "首页", path: "/home" }],
           },
         },
         {
@@ -55,6 +56,7 @@ const router = createRouter({
             auth: [],
             title: "book",
             icon: "el-icon-menu",
+            breadcrumb: [{ name: "书籍管理", path: "/book" }],
           },
         },
 
@@ -67,6 +69,7 @@ const router = createRouter({
             auth: [],
             title: "common",
             icon: "el-icon-menu",
+            breadcrumb: [{ name: "通用组件", path: "" }],
           },
           children: [
             {
@@ -76,6 +79,10 @@ const router = createRouter({
                 auth: [],
                 title: "count",
                 icon: "el-icon-menu",
+                breadcrumb: [
+                  { name: "通用组件", path: "" },
+                  { name: "数字动画", path: "/count" },
+                ],
               },
             },
             {
@@ -85,6 +92,10 @@ const router = createRouter({
                 auth: [],
                 title: "barrage",
                 icon: "el-icon-menu",
+                breadcrumb: [
+                  { name: "通用组件", path: "" },
+                  { name: "弹幕组件", path: "/barrage" },
+                ],
               },
             },
             {
@@ -94,6 +105,10 @@ const router = createRouter({
                 auth: [],
                 title: "player",
                 icon: "el-icon-menu",
+                breadcrumb: [
+                  { name: "通用组件", path: "" },
+                  { name: "视频组件", path: "/player" },
+                ],
               },
             },
             {
@@ -103,6 +118,10 @@ const router = createRouter({
                 auth: [],
                 title: "qrcode",
                 icon: "el-icon-menu",
+                breadcrumb: [
+                  { name: "通用组件", path: "" },
+                  { name: "二维码组件", path: "/qrcode" },
+                ],
               },
             },
             {
@@ -112,6 +131,10 @@ const router = createRouter({
                 auth: [],
                 title: "canvas",
                 icon: "el-icon-menu",
+                breadcrumb: [
+                  { name: "通用组件", path: "" },
+                  { name: "canvas组件", path: "/canvas" },
+                ],
               },
             },
             {
@@ -121,6 +144,10 @@ const router = createRouter({
                 auth: [],
                 title: "svg",
                 icon: "el-icon-message",
+                breadcrumb: [
+                  { name: "通用组件", path: "" },
+                  { name: "svg组件", path: "/svg" },
+                ],
               },
             },
             {
@@ -130,6 +157,10 @@ const router = createRouter({
                 auth: [],
                 title: "svg",
                 icon: "el-icon-music",
+                breadcrumb: [
+                  { name: "通用组件", path: "" },
+                  { name: "Music组件", path: "/music" },
+                ],
               },
             },
           ],
@@ -142,6 +173,7 @@ const router = createRouter({
             auth: [],
             title: "socket",
             // icon: "el-icon-menu",
+            breadcrumb: [{ name: "socket", path: "/socket" }],
           },
         },
         {
@@ -152,6 +184,7 @@ const router = createRouter({
             auth: [],
             title: "setting",
             // icon: "el-icon-menu",
+            breadcrumb: [{ name: "设置", path: "/setting" }],
           },
         },
       ],
