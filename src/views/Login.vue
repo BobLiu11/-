@@ -30,9 +30,9 @@
   import { ref, reactive } from "vue";
   import router from "../router";
   import { storeToRefs } from "pinia";
-  import { usersStore } from "../store/user";
+  import { useUsersStore } from "../store/user";
   import { ElMessage } from "element-plus";
-  const store = usersStore();
+  const store = useUsersStore();
   const { name } = storeToRefs(store);
   const tableData = ref([]);
   const count = ref(0);

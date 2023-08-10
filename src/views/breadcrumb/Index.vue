@@ -1,6 +1,36 @@
 <template>
   <div class="breadcrumb">
     <el-breadcrumb :separator-icon="ArrowRight" separator="/">
+      <!-- <div v-for="(item, index) in menu" :key="index">
+        <el-breadcrumb-item
+          v-if="item.children && item.children.length"
+          :index="item.index"
+        >
+          <template #title>
+            <el-icon :size="20">
+              <component :is="item.icon" />
+            </el-icon>
+            <span>{{ item.title }}</span>
+          </template>
+          <el-breadcrumb-item
+            v-for="(subItem, index) in item.children"
+            :key="index"
+            :index="subItem.index"
+          >
+            <el-icon :size="20">
+              <component :is="subItem.icon" />
+            </el-icon>
+            <span>{{ subItem.title }}</span>
+          </el-breadcrumb-item>
+        </el-breadcrumb-item>
+        <el-breadcrumb-item v-else :index="item.index">
+          <el-icon :size="20">
+            <component :is="item.icon" />
+          </el-icon>
+          <span>{{ item.title }}</span>
+        </el-breadcrumb-item>
+      </div> -->
+
       <el-breadcrumb-item :to="{ path: '/home' }">首页</el-breadcrumb-item>
       <el-breadcrumb-item>promotion management</el-breadcrumb-item>
       <el-breadcrumb-item>promotion list</el-breadcrumb-item>
@@ -27,7 +57,6 @@
         <template #dropdown>
           <el-dropdown-menu>
             <el-dropdown-item @click="handleSignOut()">退出</el-dropdown-item>
-            <!-- <el-dropdown-item>Action 2</el-dropdown-item> -->
           </el-dropdown-menu>
         </template>
       </el-dropdown>
@@ -39,10 +68,11 @@
 import { ArrowRight } from "@element-plus/icons-vue";
 import { ref } from "vue";
 import { storeToRefs } from "pinia";
-import { usersStore } from "../../store/user";
+import { useUsersStore } from "../../store/user";
 import { useRouter, useRoute } from "vue-router";
 import { Bell } from "@element-plus/icons-vue";
-const users_store = usersStore();
+import { menu } from "@/mock/menu";
+const users_store = useUsersStore();
 const url = ref(
   "https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg"
 );

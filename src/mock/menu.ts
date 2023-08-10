@@ -4,7 +4,7 @@ export const menu = [
     title: "首页",
     icon: "Menu",
     children: [],
-    // path: "/",
+    path: "/home",
   },
   {
     index: "1",

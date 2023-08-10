@@ -1,8 +1,3 @@
-import { usersStore } from "./user";
-
-// 统一导出useStore方法
-export default function useStore() {
-  return {
-    usersStore: usersStore(),
-  };
-}
+// store 统一出口
+export * from "./user";
+export * from "./menu";

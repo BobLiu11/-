@@ -4,7 +4,11 @@
       <el-icon :size="20" v-if="isCollapse" @click="handleClose"><Expand /></el-icon>
       <el-icon :size="20" v-else @click="handleClose"><Fold /></el-icon>
     </div> -->
-    <el-menu default-active="1" class="el-menu-vertical-demo" :collapse="isCollapse">
+    <el-menu
+      default-active="1"
+      class="el-menu-vertical-demo"
+      :collapse="isCollapse"
+    >
       <div v-for="(item, index) in menu" :key="index">
         <el-sub-menu
           v-if="item.children && item.children.length"
@@ -41,21 +45,27 @@
 </template>
   
 <script setup>
-import { ref } from 'vue'
+import { ref, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { menu } from "@/mock/menu.ts";
+import { useUsersStore,useMenusStore } from '@/store'
 const router = useRouter();
-const isCollapse = ref(false)
+const menusStore = useMenusStore();
+const isCollapse = ref(false);
+const activeIndex = ref("1");
+watch(activeIndex, (newIndex, oldIndex) => {
+  console.log(newIndex, oldIndex);
+});
 const handleOpen = (key, keyPath) => {
   console.log(key, keyPath);
 };
 const handleClose = () => {
-  isCollapse.value=!isCollapse.value
+  isCollapse.value = !isCollapse.value;
 };
 const handleMenu = (item) => {
   if (item.path) {
     router.push({ path: item.path });
-  } 
+  }
 };
 </script>
 <style scope lang="scss">

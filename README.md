@@ -13,3 +13,4 @@
 7、socket通信使用  
 8、typescript  
 9、添加 vitePress
+10、使用echarts统计数据
