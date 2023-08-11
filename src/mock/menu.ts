@@ -17,7 +17,7 @@ export const menu = [
     index: "2",
     title: "通用组件",
     icon: "Coin",
-    path: "/common",
+    path: "",
     children: [
       {
         index: "2-1",

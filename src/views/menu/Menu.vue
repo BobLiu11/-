@@ -47,8 +47,28 @@ const handleOpen = (key, keyPath) => {
 const handleClose = () => {
   isCollapse.value = !isCollapse.value;
 };
+const findPath = (tree, index) => {
+  for (const node of tree) {
+    // 如果当前节点的 id 与目标节点相同，则返回包含当前节点 id 的路径
+    if (node.index === index) {
+      return [node];
+    }
+    // 如果当前节点有子节点，则递归查找目标节点
+    if (node.children) {
+      const path = findPath(node.children, index);
+      if (path.length > 0) {
+        // 如果在子节点中找到了目标节点，将当前节点的 id 添加到路径中并返回
+        return [node, ...path];
+      }
+    }
+  }
+  // 如果在整个树中未找到目标节点，返回空数组表示未找到
+  return [];
+}
 const handleMenu = (item) => {
   menusStore.setActiveIndex(item.index)
+  const pathList = findPath(menu, item.index)
+  menusStore.setActiveMenu(pathList)
   if (item.path) {
     router.push({ path: item.path });
   }

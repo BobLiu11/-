@@ -1,17 +1,11 @@
 <template>
   <div class="breadcrumb">
-    <BreadcrumbItem :breadcrumbItems="menu" />
+    <BreadcrumbItem :breadcrumbItems="menusStore.getActiveMenu" />
     <div class="right_container">
       <el-badge class="item" :value="3">
         <el-button :icon="Bell" />
       </el-badge>
-      <el-avatar
-        class="avatar_style"
-        shape="square"
-        :size="30"
-        fit="fill"
-        :src="url"
-      />
+      <el-avatar class="avatar_style" shape="square" :size="30" fit="fill" :src="url" />
       <el-dropdown>
         <span class="el-dropdown-link">
           {{ users_store.getName }}
@@ -30,21 +24,17 @@
 </template>
   
 <script lang="ts" setup>
-import { ArrowRight } from "@element-plus/icons-vue";
-import { ref } from "vue";
-import { storeToRefs } from "pinia";
-import { useUsersStore } from "../../store/user";
+import { ref, watch, reactive, nextTick } from "vue";
 import { useRouter, useRoute } from "vue-router";
 import { Bell } from "@element-plus/icons-vue";
-import { menu } from "@/mock/menu";
-import  BreadcrumbItem  from "./BreadcrumbItem.vue";
-
+import BreadcrumbItem from "./BreadcrumbItem.vue";
+import { useUsersStore, useMenusStore } from '@/store'
+const menusStore = useMenusStore();
 const users_store = useUsersStore();
 const url = ref(
   "https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg"
 );
 const router = useRouter();
-const route = useRoute();
 const handleSignOut = () => {
   router.push({ path: "/" });
 };
@@ -79,6 +69,7 @@ const handleSignOut = () => {
     border-radius: 10%;
   }
 }
+
 .example-showcase .el-dropdown-link {
   cursor: pointer;
   color: var(--el-color-primary);
