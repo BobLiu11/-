@@ -1,8 +1,6 @@
 <template>
   <div>
-    <div class="header">
-      <span>{{ "视频组件" }}</span>
-    </div>
+    <Header title="视频组件"></Header>
     <div class="example">
       <div id="mse"></div>
     </div>
@@ -11,6 +9,7 @@
   
 <script setup lang="ts">
 import { onMounted, ref, reactive } from "vue";
+import Header from "@/components/Header.vue";
 import Player from "xgplayer";
 onMounted(() => {
   new Player({
@@ -28,15 +27,6 @@ onMounted(() => {
 });
 </script>
 <style scoped lang="scss">
-.header {
-  display: flex;
-  align-items: center;
-  margin: 1rem;
-  padding: 0.5rem;
-  background-color: #fff;
-  height: 4rem;
-}
-
 .example {
   display: flex;
   align-items: center;

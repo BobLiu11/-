@@ -30,7 +30,6 @@ const router = createRouter({
     {
       path: "/layout",
       component: () => import("../views/Layout.vue"),
-      //hidden: true,
       redirect: "/home",
       meta: {
         auth: [],
@@ -51,7 +50,6 @@ const router = createRouter({
         {
           path: "/book",
           component: () => import("../views/book/Book.vue"),
-          //hidden: true,
           meta: {
             auth: [],
             title: "book",
@@ -63,7 +61,6 @@ const router = createRouter({
         {
           path: "/common",
           component: () => import("../views/common/Index.vue"),
-          //hidden: true,
           redirect: "/count",
           meta: {
             auth: [],
@@ -168,22 +165,18 @@ const router = createRouter({
         {
           path: "/socket",
           component: () => import("../views/socket/Index.vue"),
-          //hidden: true,
           meta: {
             auth: [],
             title: "socket",
-            // icon: "el-icon-menu",
             breadcrumb: [{ name: "socket", path: "/socket" }],
           },
         },
         {
           path: "/setting",
           component: () => import("../views/setting/Index.vue"),
-          //hidden: true,
           meta: {
             auth: [],
             title: "setting",
-            // icon: "el-icon-menu",
             breadcrumb: [{ name: "设置", path: "/setting" }],
           },
         },
@@ -192,7 +185,6 @@ const router = createRouter({
     {
       path: "/register",
       component: () => import("../views/Register.vue"),
-      //hidden: true,
       meta: {
         auth: [],
         title: "login",
@@ -202,7 +194,6 @@ const router = createRouter({
     {
       path: "/*",
       component: () => import("../views/404.vue"),
-      //hidden: true,
       meta: {
         auth: [],
         title: "test",

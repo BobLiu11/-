@@ -1,8 +1,6 @@
 <template>
   <div>
-    <div class="header">
-      <span>{{ "数字动画：￥2022" }}</span>
-    </div>
+    <Header title="数字动画：￥2022"></Header>
     <count-up
       class="example"
       :start-val="0"
@@ -14,21 +12,13 @@
 </template>
 
 <script setup lang="ts">
+import Header from "@/components/Header.vue";
 import CountUp from "vue-countup-v3";
 const options = {
   separator: "❤️",
 };
 </script>
 <style scoped lang="scss">
-.header {
-  display: flex;
-  align-items: center;
-  margin: 1rem;
-  padding: 0.5rem;
-  background-color: #fff;
-  height: 4rem;
-}
-
 .example {
   display: flex;
   align-items: center;

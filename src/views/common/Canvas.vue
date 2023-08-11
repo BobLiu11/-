@@ -1,8 +1,6 @@
 <template>
   <div>
-    <div class="header">
-      <span>{{ "canvas组件" }}</span>
-    </div>
+    <Header title="canvas组件"></Header>
     <div class="example">
       <canvas class="canvas_style" id="tutorial" width="150" height="150">
         current stock price: $3.15 +0.15
@@ -36,6 +34,7 @@
   
 <script setup>
 import { onMounted, ref, reactive } from "vue";
+import Header from "@/components/Header.vue";
 onMounted(() => {
   const tutorial = document.getElementById("tutorial");
   if (tutorial.getContext) {
@@ -344,15 +343,6 @@ const drawStar = (ctx, r) => {
 };
 </script>
 <style scoped lang="scss">
-.header {
-  display: flex;
-  align-items: center;
-  margin: 1rem;
-  padding: 0.5rem;
-  background-color: #fff;
-  height: 4rem;
-}
-
 .example {
   display: flex;
   align-items: center;

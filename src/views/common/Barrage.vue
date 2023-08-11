@@ -1,27 +1,17 @@
 <template>
   <div>
-    <div class="header">
-      <span>{{ "弹幕组件" }}</span>
-    </div>
+    <Header title="弹幕组件"></Header>
     <vue-danmaku class="example" loop :danmus="danmus"></vue-danmaku>
   </div>
 </template>
   
 <script setup lang="ts">
+import Header from "@/components/Header.vue";
 import { onMounted, ref, reactive } from "vue";
 import vueDanmaku from "vue3-danmaku";
 const danmus = ref(["danmu1", "danmu2", "danmu3", "..."]);
 </script>
 <style scoped lang="scss">
-.header {
-  display: flex;
-  align-items: center;
-  margin: 1rem;
-  padding: 0.5rem;
-  background-color: #fff;
-  height: 4rem;
-}
-
 .example {
   display: flex;
   align-items: center;

@@ -1,16 +1,15 @@
 <template>
   <div>
-    <div class="header">
-      <span>{{ "音乐组件" }}</span>
-    </div>
+    <Header title="音乐组件"></Header>
     <div class="example">
       <!-- <div id="mse"></div> -->
     </div>
   </div>
 </template>
     
-<script setup>
+<script lang="ts" setup>
 import { onMounted, ref, reactive } from "vue";
+import Header from "@/components/Header.vue";
 import Player from "xgplayer";
 // onMounted(() => {
 //   new Player({
@@ -30,15 +29,6 @@ import Player from "xgplayer";
 </script>
 
 <style scoped lang="scss">
-.header {
-  display: flex;
-  align-items: center;
-  margin: 1rem;
-  padding: 0.5rem;
-  background-color: #fff;
-  height: 4rem;
-}
-
 .example {
   display: flex;
   align-items: center;
