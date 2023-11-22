@@ -1,42 +1,38 @@
 <template>
     <div>
-        <Header title="按钮组件"></Header>
-        <div class="send_contain">
-            <el-button type="primary" class="sendButton" :disabled="isCoolingDown" @click="startCooldown">me</el-button>
+        <!-- <Header title="按钮组件"></Header> -->
+        <!-- <div class="send_contain">
+            <el-button type="primary" class="sendButton" :disabled="isCoolingDown" @click="handleClick">me</el-button>
             <div class="overlay" v-if="isCoolingDown">
                 <div class="scanner"></div>
+                <div class="scanner scan_animation"></div>
             </div>
+        </div> -->
+
+        <div class="cooldown-button">
+            <button :disabled="isCoolingDown" @click="startCooldown">按钮</button>
+            <div v-if="isCoolingDown" class="cooldown-overlay" :style="overlayStyle"></div>
         </div>
+
     </div>
 </template>
 <script setup lang="ts">
-import Header from "@/components/Header.vue";
 import { onMounted, ref, reactive, computed } from "vue";
 const isCoolingDown = ref(false)
-const overlayWidth = ref('0%')
-const scanProgress = ref(0)
 const cooldownTime = ref(3000)
-const startTime = ref(0)
-const overlayStyle = computed(() => {
-    if (isCoolingDown.value) {
-        const currentTime = Date.now();
-        const elapsedTime = currentTime - startTime.value;
-        const progress = elapsedTime / cooldownTime.value;
-        const rotation = progress * 360; // 计算旋转角度（顺时针）
-        return {
-            transform: `rotate(${rotation}deg)`
-        };
-    }
-    return {};
+const overlayStyle = reactive({
+    // 遮罩的初始样式
+    width: '100%',
+    height: '100%',
+    borderRadius: '50%',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)'
 })
-const startCooldown = () => {
-    isCoolingDown.value = true;
-    startTime.value = Date.now();
-    setTimeout(() => {
-        isCoolingDown.value = false;
-        startTime.value = 0;
-    }, cooldownTime.value);
-}
+onMounted(() => {
+    const button = document.querySelector('.cooldown-button button');
+    const radius = Math.max(button.offsetWidth, button.offsetHeight) / 2;
+    overlayStyle.backgroundSize = `${radius * 2}px ${radius * 2}px`;
+});
+const scanProgress = ref(0)
 const handleClick = () => {
     if (!isCoolingDown.value) {
         // 处理点击事件逻辑
@@ -52,16 +48,31 @@ const handleClick = () => {
         }, 3000);
     }
 }
+
+const startCooldown = () => {
+    isCoolingDown.value = true;
+    setTimeout(() => {
+        isCoolingDown.value = false;
+    }, cooldownTime);
+    const button = document.querySelector('.cooldown-button button');
+    const radius = Math.max(button.offsetWidth, button.offsetHeight) / 2;
+    const circumference = 2 * Math.PI * radius;
+    let progress = 0;
+    const sweepOverlay = () => {
+        progress += 1 / circumference;
+        overlayStyle.backgroundImage = `conic-gradient(transparent 0%, transparent ${progress * 100}%, rgba(0, 0, 0, 0.5) ${progress * 100}%, rgba(0, 0, 0, 0.5) 100%)`;
+        if (isCoolingDown.value && progress < 1) {
+            requestAnimationFrame(sweepOverlay);
+        }
+    };
+    requestAnimationFrame(sweepOverlay);
+}
 </script>
 <style scoped lang="scss">
 /* 样式定义 */
 .send_contain {
     position: relative;
-    width: 32px;
-    height: 32px;
-    background: rgba(60, 110, 240, 1);
-    border-radius: 4px;
-    margin: 4rem;
+    margin: 5rem;
 }
 
 .sendButton {
@@ -80,14 +91,18 @@ const handleClick = () => {
     overflow: hidden;
 }
 
+
 .scanner {
     position: absolute;
-    top: calc(50% - 2px);
-    left: calc(50% - 50px);
-    width: 100px;
-    height: 4px;
+    bottom: calc(50%);
+    left: calc(50%);
+    width: 1px;
+    height: 16px;
     background-color: rgba(0, 0, 0, 0.5);
-    transform-origin: center center;
+    transform-origin: bottom center;
+}
+
+.scan_animation {
     animation: scan 3s linear infinite;
 }
 
@@ -101,4 +116,18 @@ const handleClick = () => {
     }
 }
 
+
+
+.cooldown-button {
+    position: relative;
+    margin-top: 4rem;
+}
+
+.cooldown-overlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+}
 </style>

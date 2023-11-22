@@ -9,17 +9,19 @@
     "outDir": "lib", //将 ts 文件的编译结果输出到 lib 目录下
     "declaration": true, //设置为 true，表示将会由 ts 文件自动生成 .d.ts 声明文件，也会输出到 lib 目录下。
     //使用 tsc 自动生成声明文件时，每个 ts 文件都会对应一个 .d.ts 声明文件。这样的好处是，使用方不仅可以在使用 import foo from 'foo' 导入默认的模块时获得类型提示，还可以在使用 import bar from 'foo/lib/bar' 导入一个子模块时，也获得对应的类型提示。
-    "target": "ESNext",
+    "target": "ESNext",// 指定 ECMAScript 目标版本: 'ES3' (default), 'ES5', 'ES6'/'ES2015', 'ES2016', 'ES2017', or 'ESNEXT'
     "useDefineForClassFields": true,
-    "module": "ESNext",
+    "module": "ESNext",// 指定使用模块: 'commonjs', 'amd', 'system', 'umd' or 'es2015'
+    "allowJs": true,                       // 允许编译 javascript 文件
+    "checkJs": true,                       // 报告 javascript 文件中的错误
     "moduleResolution": "Node",
     "strict": true,
-    "jsx": "preserve",
+    "jsx": "preserve",// 指定 jsx 代码的生成: 'preserve', 'react-native', or 'react'
     "sourceMap": true,
     "resolveJsonModule": true,
     "isolatedModules": true, //这是因为 esbuild 只执行没有类型信息的转译，它并不支持某些特性，如 const enum 和隐式类型导入
     "esModuleInterop": true,
-    "lib": [
+    "lib": [// 指定要包含在编译中的库文件
       "ESNext",
       "DOM"
     ],
